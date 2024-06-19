@@ -1,11 +1,11 @@
-# Título do Projeto
+# LearnIA
 
 
 ![Capa do Projeto](https://picsum.photos/850/280)
 
 # Sobre o Projeto
 
-Escreva aqui um parágrafo contendo uma descrição ou resumo do seu projeto.
+O projeto busca desenvolver um software aplicando atividades de gerenciamento de configuração por meio do uso de ferramentas de construção (build) de sistemas automatizadas, integração contínua (CI), entrega contínua (CD), empacotamento e implantação de software. Além disso, os princípios de DevOps deverão foram incorporados, promovendo a eficiência e qualidade no ciclo de desenvolvimento e operação do software.
 
 <h4 align="center"> 
 	🚧  Em desenvolvimento . . .
@@ -34,10 +34,7 @@ Escreva aqui um parágrafo contendo uma descrição ou resumo do seu projeto.
 
 # Tecnologias Usadas
 
-- [Flutter](https://flutter.dev/)
-- [Node.js](https://nodejs.org/en/)
-- [React](https://pt-br.reactjs.org/)
-- [React Native](https://reactnative.dev/)
+- [JavaScript](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript)
 - [TypeScript](https://www.typescriptlang.org/)
 
 # Contribuição
@@ -46,7 +43,12 @@ Leia o arquivo [CONTRIBUTING.md](CONTRIBUTING.md) para saber detalhes sobre o no
 
 # Autores
 
-[Exemplo](https://github.com/testing-library/react-testing-library#contributors)
+[Bernardo Rolfhs](https://github.com/testing-library/react-testing-library#contributors)
+[Eric Jardim](https://github.com/testing-library/react-testing-library#contributors)
+[Elian Eliezer](https://github.com/testing-library/react-testing-library#contributors)
+[Marcos Felipe](https://github.com/testing-library/react-testing-library#contributors)
+[Matheus Belo](https://github.com/testing-library/react-testing-library#contributors)
+[Tarcísio Ney](https://github.com/testing-library/react-testing-library#contributors)
 
 # Licença
 
