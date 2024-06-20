@@ -72,7 +72,7 @@ export async function POST(req: Request, res: Response) {
                     question: question.question,
                     answer: question.answer,
                     gameId: game.id,
-                    questionType: 'closed'
+                    questionType: 'complete'
                 }
             })
             await prisma.question.createMany({

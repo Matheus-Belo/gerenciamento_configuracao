@@ -1,6 +1,6 @@
 'use client'
 import { Game, Question } from '@prisma/client'
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { TypographyH3, TypographyH4, TypographyLead, TypographyMuted } from './Typography'
 import { TbChevronRight } from "react-icons/tb";
 
@@ -15,13 +15,19 @@ import {
     CardTitle,
 } from "./ui/card"
 import { Separator } from '@radix-ui/react-dropdown-menu'
-import { Button } from './ui/button'
+import { Button, buttonVariants } from './ui/button'
 import CompleteScoreboard from './CompleteScoreboard';
 import { useMutation } from 'react-query';
 import { checkAnswerSchema } from '@/schemas/form/quiz';
 import axios from 'axios';
 import { z } from 'zod';
 import { toast } from 'sonner';
+import { cn, formatTimeDelta } from '@/lib/utils';
+import { BarChartIcon } from '@radix-ui/react-icons';
+import Link from 'next/link';
+import { differenceInSeconds } from "date-fns";
+import { endGameSchema } from '@/schemas/questions';
+
 
 type Props = {
     game: Game & { questions: Pick<Question, 'id' | 'options' | 'question'>[] }
@@ -31,9 +37,11 @@ const Complete = ({ game }: Props) => {
 
 
     const [questionIndex, setQuestionIndex] = useState(0);
-    const [selected, setSelected] = useState(0)
+    const [selected, setSelected] = useState(null)
     const [correct, setCorrect] = useState(0)
     const [wrong, setWrong] = useState(0)
+    const [hasEnded, setHasEnded]= useState(false)
+    const [now, setNow] = useState(new Date());
 
 
 
@@ -48,7 +56,6 @@ const Complete = ({ game }: Props) => {
 
 
         try {
-
 
             let parsedOptions = JSON.parse(currentQuestion.options);
 
@@ -66,6 +73,10 @@ const Complete = ({ game }: Props) => {
 
     const {mutate: checkAnswer, isLoading: isChecking} = useMutation({
         mutationFn: async () =>{
+
+            if(selected == null){
+                return
+            }
             const payload: z.infer<typeof checkAnswerSchema> ={
                 questionId: currentQuestion.id,
                 userAnswer: options[selected]
@@ -75,7 +86,29 @@ const Complete = ({ game }: Props) => {
         }
     })
 
+    const { mutate: endGame } = useMutation({
+        mutationFn: async () => {
+          const payload: z.infer<typeof endGameSchema> = {
+            gameId: game.id,
+          };
+          const response = await axios.post(`/api/endGame`, payload);
+          return response.data;
+        },
+      });
+    
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+          if (!hasEnded) {
+            setNow(new Date());
+          }
+        }, 1000);
+        return () => clearInterval(interval);
+    }, [hasEnded]);
+
+
     const handleNext = useCallback(()=>{ //memoizing a function trough states
+         console.log(questionIndex)
         checkAnswer(undefined, {
             onSuccess: ({isCorrect}) =>{
                 if(isCorrect){
@@ -85,12 +118,37 @@ const Complete = ({ game }: Props) => {
                     toast.error('Resposta incorreta')
                     setWrong((prev) => prev+1)
                 }
-
+                if (questionIndex === game.questions.length - 1){
+                    endGame()
+                
+                    setHasEnded(true)
+                    return
+                }
                 setQuestionIndex((prev) => prev+1)
                 
             }
         } )
-    },[checkAnswer,toast])
+    },[checkAnswer,toast, questionIndex, game.questions.length, endGame])
+
+    if (hasEnded) {
+        return (
+          <div className="absolute flex flex-col justify-center -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2">
+            <div className="px-4 py-2 mt-2 font-semibold text-white bg-green-500 rounded-md whitespace-nowrap">
+              Você completou em {" "}
+              {formatTimeDelta(differenceInSeconds(now, game.timeStarted))}
+            </div>
+            <Link
+              href={`/statistics/${game.id}`}
+              className={cn(buttonVariants({ size: "lg" }), "mt-2")}
+            >
+              Ver resumo
+              <BarChartIcon className="w-4 h-4 ml-2" />
+            </Link>
+          </div>
+        );
+    }
+
+     
     return (
         <div className="absolute -translate-x-1/2 -translate-y-1/2 md:w-[80vw] max-w-4xl w-[90vw] top-1/2 left-1/2">
             <div className="flex flex-row justify-between mb-2">
@@ -104,16 +162,12 @@ const Complete = ({ game }: Props) => {
 
                     <div className="flex mt-3 text-muted-foreground">
                         <TbHourglassHigh className="mr-2 my-auto" />
-                        00:00
+                        {formatTimeDelta(differenceInSeconds(now, game.timeStarted))}
                     </div>
 
                 </div>
 
-
-
                 <CompleteScoreboard correct={correct} wrong={wrong} />
-
-
             </div>
 
             <Card>
