@@ -1,0 +1,19 @@
+{
+    "name": "web",
+    "dockerComposeFile": ["../docker-compose.yaml"],
+    "service": "web",
+    "workspaceFolder": "/app",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "prisma.prisma",
+                "pkief.material-icon-theme",
+                "bradlc.vscode-tailwindcss",
+                "austenc.tailwind-docs",
+                "stivo.tailwind-fold",
+                "naumovs.color-highlight"
+            ]
+        }
+    },
+    "shutdownAction": "none"
+}

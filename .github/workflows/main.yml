@@ -1,0 +1,22 @@
+name: Deploy application
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Use Node.js 18
+      uses: actions/setup-node@v2
+      with:
+        node-version: '18.13.0'
+
+    - name: Build
+      run: |
+        cd learnai
+        npm install
+        npm run build

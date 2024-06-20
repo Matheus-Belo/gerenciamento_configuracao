@@ -1,0 +1,38 @@
+services:
+  web: 
+    build: 
+      dockerfile: Dockerfile
+      context: ./learnai
+    container_name: web
+    image: web
+    restart: unless-stopped
+    depends_on: 
+      - db
+    ports:
+      - 3000:3000
+    volumes: 
+      - ./learnai:/app 
+      - web_node_modules_vol:/app/node_modules 
+    networks:
+      - apidb
+
+  db: 
+    image: mysql:8.0
+    container_name: mysql-dev
+    restart: unless-stopped
+    ports:
+      - 8080:3306
+    env_file:
+      - ./learnai/.env
+    volumes: 
+      - mysql:/var/lib/mysql
+    networks:
+      - apidb
+
+volumes:
+  mysql:
+  web_node_modules_vol:
+
+networks:
+    apidb:
+        driver: bridge
