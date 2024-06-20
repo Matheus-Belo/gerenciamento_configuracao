@@ -1,8 +1,5 @@
 # LearnIA
 
-
-![Capa do Projeto](https://picsum.photos/850/280)
-
 # Sobre o Projeto
 
 O projeto busca desenvolver um software aplicando atividades de gerenciamento de configuração por meio do uso de ferramentas de construção (build) de sistemas automatizadas, integração contínua (CI), entrega contínua (CD), empacotamento e implantação de software. Além disso, os princípios de DevOps deverão foram incorporados, promovendo a eficiência e qualidade no ciclo de desenvolvimento e operação do software.
@@ -36,6 +33,8 @@ O projeto busca desenvolver um software aplicando atividades de gerenciamento de
 
 - [JavaScript](https://developer.mozilla.org/pt-BR/docs/Web/JavaScript)
 - [TypeScript](https://www.typescriptlang.org/)
+- [Next.js](https://nextjs.org/)
+- [MySQL](https://www.mysql.com/)
 
 # Contribuição
 
@@ -43,7 +42,7 @@ Leia o arquivo [CONTRIBUTING.md](CONTRIBUTING.md) para saber detalhes sobre o no
 
 # Autores
 
-[Bernardo Rolfhs](https://github.com/testing-library/react-testing-library#contributors)
+[Bernardo Rohlfs](https://github.com/testing-library/react-testing-library#contributors)
 [Eric Jardim](https://github.com/testing-library/react-testing-library#contributors)
 [Elian Eliezer](https://github.com/testing-library/react-testing-library#contributors)
 [Marcos Felipe](https://github.com/testing-library/react-testing-library#contributors)
