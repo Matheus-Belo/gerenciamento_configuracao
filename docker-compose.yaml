@@ -4,7 +4,7 @@ services:
       dockerfile: Dockerfile
       context: ./learnai
     container_name: web
-    image: web
+    image: learnai-web
     restart: unless-stopped
     depends_on: 
       - db
