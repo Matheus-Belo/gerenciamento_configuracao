@@ -19,5 +19,5 @@ jobs:
       run: |
         cd learnai
         npm install
-        npm run build
         npm run testing
+        npm run build
